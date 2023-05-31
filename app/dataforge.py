@@ -99,7 +99,7 @@ sidebar = html.Div(
             dbc.Nav(
                 [
                     dbc.NavLink(["Accueil"], href="/", active="exact"),
-                    dbc.NavLink(["Data List"], href="/data-list",disabled=False),
+                    dbc.NavLink(["Data List"], href="/data-list", active="exact"),
                     #dbc.NavLink("St Gd ", href="/st-gd",  disabled=True),
                 ],
                 vertical=True,
