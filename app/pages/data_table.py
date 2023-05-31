@@ -35,7 +35,7 @@ plc_grid = dag.AgGrid(
 
 card_tasks = dbc.Card(
     children=[
-        dbc.CardHeader(children="Tasks"),
+        dbc.CardHeader(children="📝Tasks"),
         dbc.CardBody(
             children=[
                 dmc.Accordion(
@@ -129,7 +129,7 @@ tag_grid = dag.AgGrid(
 
 card_tags = dbc.Card(
     children=[
-        dbc.CardHeader(children="Tags"),
+        dbc.CardHeader(children="🏷️ Tags"),
         dbc.CardBody(
             children=[
                 tag_grid
