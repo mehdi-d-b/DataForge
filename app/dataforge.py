@@ -1,23 +1,7 @@
 import dash
 import dash_bootstrap_components as dbc
 #from dash import Input, Output, State, dcc, html
-import numpy as np
-import orjson as json
-import re
-import textstat
-import statistics
 import diskcache
-from dash import ctx
-
-from utils.preprocess import (
-    tokenize_and_stem, 
-    get_sentences_length_avg, 
-    get_word_vectors,
-    get_chapters
-    )
-
-import dash_mantine_components as dmc
-from dash_iconify import DashIconify
 
 from dash_extensions.enrich import (
     #DashProxy,
@@ -36,7 +20,7 @@ from dash_extensions.enrich import (
 import plotly.graph_objs as go
 
 import pages.home as home
-import pages.metrics as metrics
+import pages.data_table as data_table
 
 
 cache = diskcache.Cache("./cache")
@@ -60,7 +44,7 @@ app = dash.Dash(
 # it consists of a title, and a toggle, the latter is hidden on large screens
 sidebar_header = dbc.Row(
     [
-        dbc.Col(html.H2("Dashboard", className="display-4")),
+        dbc.Col(html.H2("DataForge", className="display-4")),
         dbc.Col(
             [
                 html.Button(
@@ -115,7 +99,7 @@ sidebar = html.Div(
             dbc.Nav(
                 [
                     dbc.NavLink(["Accueil"], href="/", active="exact"),
-                    #dbc.NavLink("Métriques Générales", href="/metriques",disabled=True),
+                    dbc.NavLink("Data List", href="/data-list",disabled=False),
                     #dbc.NavLink("St Gd ", href="/st-gd",  disabled=True),
                 ],
                 vertical=True,
@@ -141,8 +125,8 @@ app.layout = html.Div([
 def render_page_content(pathname):
     if pathname == "/":
         return home.layout
-    elif pathname == "/metriques":
-        return metrics.layout
+    elif pathname == "/data-list":
+        return data_table.layout
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [
