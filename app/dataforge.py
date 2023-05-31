@@ -21,6 +21,7 @@ import plotly.graph_objs as go
 
 import pages.home as home
 import pages.data_table as data_table
+import pages.status as status
 
 
 cache = diskcache.Cache("./cache")
@@ -100,7 +101,7 @@ sidebar = html.Div(
                 [
                     dbc.NavLink(["Accueil"], href="/", active="exact"),
                     dbc.NavLink(["Data List"], href="/data-list", active="exact"),
-                    #dbc.NavLink("St Gd ", href="/st-gd",  disabled=True),
+                    dbc.NavLink("Status", href="/status", active="exact"),
                 ],
                 vertical=True,
                 pills=True,
@@ -117,7 +118,7 @@ app.layout = html.Div([
     dcc.Location(id="url"), 
     sidebar, 
     content,
-    dcc.Store(id='store-text', storage_type='local')
+    dcc.Store(id='store-tags', storage_type='local')
     ])
 
 
@@ -127,6 +128,8 @@ def render_page_content(pathname):
         return home.layout
     elif pathname == "/data-list":
         return data_table.layout
+    elif pathname == "/status":
+        return status.layout
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [

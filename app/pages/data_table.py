@@ -143,7 +143,11 @@ card_tags = dbc.Card(
 layout = html.Div([
     card_tasks,
     html.Br(),
-    card_tags
+    card_tags,
+    html.Br(),
+    dmc.Affix(
+        dmc.Button("💾 Save Changes"), position={"bottom": 20, "right": 20}
+    )
 ]
 )
 
