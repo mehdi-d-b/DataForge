@@ -1,6 +1,6 @@
 import dash
 import dash_bootstrap_components as dbc
-#from dash import Input, Output, State, dcc, html
+from dash import Input, Output, State, dcc, html, no_update, ctx
 import diskcache
 
 from dash_extensions.enrich import (
@@ -99,8 +99,8 @@ sidebar = html.Div(
         dbc.Collapse(
             dbc.Nav(
                 [
-                    dbc.NavLink(["Accueil"], href="/", active="exact"),
-                    dbc.NavLink(["Data List"], href="/data-list", active="exact"),
+                    dbc.NavLink("Home", href="/", active="exact"),
+                    dbc.NavLink("Data List", href="/data-list", active="exact"),
                     dbc.NavLink("Status", href="/status", active="exact"),
                 ],
                 vertical=True,
@@ -140,7 +140,6 @@ def render_page_content(pathname):
         className="p-3 bg-light rounded-3",
     )
 
-
 @app.callback(
     Output("sidebar", "className"),
     [Input("sidebar-toggle", "n_clicks")],
@@ -150,7 +149,6 @@ def toggle_classname(n, classname):
     if n and classname == "":
         return "collapsed"
     return ""
-
 
 @app.callback(
     Output("collapse", "is_open"),
@@ -163,8 +161,22 @@ def toggle_collapse(n, is_open):
     return is_open
 
 
+@app.callback(
+    Output("plc-grid", "rowTransaction"),
+    Input("btn-rmv-plc", "n_clicks"),
+    Input("btn-add-plc", "n_clicks"),
+    State("plc-grid", "selectedRows"),
+)
+def update_rowdata(n1, n2, selection):
 
+    if ctx.triggered_id == "btn-rmv-plc":
+        if selection is None:
+            return no_update
+        return {"remove": selection}
 
+    if ctx.triggered_id == "btn-add-plc":
+        newRows = []
+        return {"add": newRows}
 
 if __name__ == "__main__":
     app.run_server(port=8888, debug=True)
