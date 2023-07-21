@@ -2,6 +2,7 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, State, dcc, html, no_update, ctx
 import diskcache
+import requests
 
 from dash_extensions.enrich import (
     #DashProxy,
@@ -19,7 +20,6 @@ from dash_extensions.enrich import (
 )
 import plotly.graph_objs as go
 
-import pages.home as home
 import pages.data_table as data_table
 import pages.status as status
 
@@ -99,9 +99,8 @@ sidebar = html.Div(
         dbc.Collapse(
             dbc.Nav(
                 [
-                    dbc.NavLink("Home", href="/", active="exact"),
+                    dbc.NavLink("Status", href="/", active="exact"),
                     dbc.NavLink("Data List", href="/data-list", active="exact"),
-                    dbc.NavLink("Status", href="/status", active="exact"),
                 ],
                 vertical=True,
                 pills=True,
@@ -125,11 +124,9 @@ app.layout = html.Div([
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
-        return home.layout
+        return status.layout
     elif pathname == "/data-list":
         return data_table.layout
-    elif pathname == "/status":
-        return status.layout
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [
@@ -167,7 +164,7 @@ def toggle_collapse(n, is_open):
     Input("btn-add-plc", "n_clicks"),
     State("plc-grid", "selectedRows"),
 )
-def update_rowdata(n1, n2, selection):
+def update_plc_rowdata(n1, n2, selection):
 
     if ctx.triggered_id == "btn-rmv-plc":
         if selection is None:
@@ -177,6 +174,23 @@ def update_rowdata(n1, n2, selection):
     if ctx.triggered_id == "btn-add-plc":
         newRows = []
         return {"add": newRows}
+    
+
+@app.callback(
+    Output("tag-grid", "rowTransaction"),
+    Input("btn-load-tag", "n_clicks"),
+)
+def update_tag_rowdata(n1):
+
+    if ctx.triggered_id == "btn-load-tag":
+        newRows = []
+        kafka_connect_url = "http://<votre_adresse_kafka_connect>:8083"
+        connector_name = "<nom_du_connecteur_plc4x>"        
+        url = f"{kafka_connect_url}/connectors/{connector_name}/config"
+        response = requests.get(url)
+        print(response)
+        return {"add": newRows}
+
 
 if __name__ == "__main__":
     app.run_server(port=8888, debug=True)

@@ -112,15 +112,15 @@ TagscolumnDefs = [
 TagsdefaultColDef = {'editable': True, "resizable": True, "sortable": True, "filter": True, "columnSize": "responsiveSizeToFit"}
 
 tags = [
-    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 1", "Description": "Description 1", "Tag address": "DB1.DBW0", "Status": "⚪"},
-    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 2", "Description": "Description 2", "Tag address": "DB1.DBW8", "Status": "🟢"},
-    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 3", "Description": "Description 3", "Tag address": "DB1.DBW16", "Status": "🟢"},
-    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 4", "Description": "Description 4", "Tag address": "DB1.DBW24", "Status": "🟢"},
-    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 5", "Description": "Description 5", "Tag address": "DB1.DBW32", "Status": "⚪"},
-    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 6", "Description": "Description 6", "Tag address": "DB1.DBW40", "Status": "🟢"},
-    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 7", "Description": "Description 7", "Tag address": "DB1.DBW48", "Status": "⚪"},
-    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 8", "Description": "Description 8", "Tag address": "DB1.DBW56", "Status": "🟢"},
-    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 9", "Description": "Description 9", "Tag address": "DB1.DBW64", "Status": "🟢"}, 
+    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 1", "Description": "Description 1", "Tag address": "DB1.DBW0", "Status": np.random.choice(["⚪", "🟢"])},
+    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 2", "Description": "Description 2", "Tag address": "DB1.DBW8", "Status": np.random.choice(["⚪", "🟢"])},
+    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 3", "Description": "Description 3", "Tag address": "DB1.DBW16", "Status": np.random.choice(["⚪", "🟢"])},
+    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 4", "Description": "Description 4", "Tag address": "DB1.DBW24", "Status": np.random.choice(["⚪", "🟢"])},
+    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 5", "Description": "Description 5", "Tag address": "DB1.DBW32", "Status": np.random.choice(["⚪", "🟢"])},
+    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 6", "Description": "Description 6", "Tag address": "DB1.DBW40", "Status": np.random.choice(["⚪", "🟢"])},
+    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 7", "Description": "Description 7", "Tag address": "DB1.DBW48", "Status": np.random.choice(["⚪", "🟢"])},
+    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 8", "Description": "Description 8", "Tag address": "DB1.DBW56", "Status": np.random.choice(["⚪", "🟢"])},
+    {"PLC Name": np.random.choice(plc_names), "Tag name": "Tag 9", "Description": "Description 9", "Tag address": "DB1.DBW64", "Status": np.random.choice(["⚪", "🟢"])}, 
 ]
 
 
@@ -148,6 +148,7 @@ card_tags = dbc.Card(
                 tag_grid,
                 dmc.Button("🗑️ Remove Selected", id="btn-rmv-tag", variant="outline"),
                 dmc.Button("➕ Add Tag", id="btn-add-tag", variant="outline"),
+                dmc.Button("📑 Load from server", id="btn-load-tag", variant="outline"),
             ],
         ),
     ],
